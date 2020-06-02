@@ -1,0 +1,3 @@
+,Model,Flops,Framework,Device,Average Time,Std Time
+0,rfcn_resnet101_coco_2018_01_28,136692338.0,Tensorflow 1.15.0,Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz,1629.8609972000122,9.733624942059492
+1,ssdlite_mobilenet_v2_coco_2018_05_09,22174467.0,Tensorflow 1.15.0,Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz,60.03239154815674,3.5528988567075745

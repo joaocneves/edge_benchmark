@@ -1,0 +1,3 @@
+,Model,Flops,Framework,Device,Average Time,Std Time
+0,rfcn_resnet101_coco_2018_01_28,0.0,Openvino 2020.2,Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz,1015.5559000000001,112.56760159265285
+1,ssdlite_mobilenet_v2_coco_2018_05_09,0.0,Openvino 2020.2,Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz,11.814540000000001,1.6014598376342615

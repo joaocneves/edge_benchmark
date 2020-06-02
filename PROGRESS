@@ -1,0 +1,16 @@
+1) create a folder 'detection_models'
+2) download the tar.gz files containing the .pb model from openvino website
+3) extract all the necessary models
+4) convert the .pb model to IR format of Openvino using model_optmizer
+
+python C:\Intel\computer_vision_sdk\deployment_tools\model_optimizer\mo_tf.py
+--input_model frozen_inference_graph.pb
+--tensorflow_object_detection_api_pipeline_config pipeline.config
+--tensorflow_use_custom_operations_config C:\Intel\computer_vision_sdk_2018.5.456\deployment_tools\model_optimizer\extensions\front\tf\ssd_v2_support.json
+--output="detection_boxes,detection_scores,num_detections"
+
+5) use benchamark app
+
+-api sync -d CPU
+-m "C:\Program Files (x86)\IntelSWTools\openvino_2020.2.117\deployment_tools\tools\model_downloader\intel\person-detection-retail-0013\FP32\person-detection-retail-0013.xml"
+-i C:\Users\joao_\Desktop\benchmark_app_images\
