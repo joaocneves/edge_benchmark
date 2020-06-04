@@ -11,6 +11,7 @@ import tensorflow.compat.v1 as tf
 #To make tf 2.0 compatible with tf1.0 code, we disable the tf2.0 functionalities
 tf.disable_eager_execution()
 import statistics as st
+from aux_fun import model_type
 from detection_model_lib import load_detection_model
 
 
@@ -43,10 +44,11 @@ if __name__ == '__main__':
     images = [name for name in os.listdir(IMAGES_DIR) if name.endswith('png') or name.endswith('jpg')]
 
     inference_data = 'test_img.jpeg'
-    inference_iters = 10
+    inference_iters = 5
     outfile = 'stats_{0}_{1}.csv'.format(FRAMEWORK, inference_device)
 
     df = pd.DataFrame({'Model': [],
+                       'Model Type': [],
                        'Flops': [],
                        'Framework': [],
                        'Device': [],
@@ -68,7 +70,7 @@ if __name__ == '__main__':
     #         print('Flops should be ~', 2*25*16*9)
     #         print('TF stats gives', flops.total_float_ops)
 
-    for model in models[13:15]:
+    for model in models:
 
         model_path = os.path.join(MODELS_DIR, model)
         model_name = 'model.ckpt.meta'
@@ -105,9 +107,9 @@ if __name__ == '__main__':
 
             consumed_time.append(1000*(t_e - t_s))
 
-
-        df = df.append({'Model': model, 'Flops': flops.total_float_ops, 'Framework': FRAMEWORK, 'Device': inference_device,
-                   'Average Time': st.mean(consumed_time), 'Std Time': st.stdev(consumed_time)}, ignore_index=True)
+        df = df.append({'Model': model, 'Model_Type': model_type(model), 'Flops': flops.total_float_ops,
+                        'Framework': FRAMEWORK, 'Device': inference_device,
+                        'Average Time': st.mean(consumed_time), 'Std Time': st.stdev(consumed_time)}, ignore_index=True)
 
 
         sess.close()

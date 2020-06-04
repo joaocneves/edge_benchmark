@@ -7,7 +7,7 @@ import cpuinfo
 import numpy as np
 import pandas as pd
 import statistics as st
-
+from aux_fun import model_type as model_type_fun
 
 
 if __name__ == '__main__':
@@ -38,11 +38,12 @@ if __name__ == '__main__':
     images = [name for name in os.listdir(IMAGES_DIR) if name.endswith('png') or name.endswith('jpg')]
 
     inference_data = 'test_img.jpeg'
-    inference_iters = 10
+    inference_iters = 5
     outfile = 'stats_{0}_{1}.csv'.format(FRAMEWORK, inference_device)
 
 
     df = pd.DataFrame({'Model': [],
+                       'Model Type': [],
                        'Flops': [],
                        'Framework': [],
                        'Device': [],
@@ -64,11 +65,11 @@ if __name__ == '__main__':
     #         print('Flops should be ~', 2*25*16*9)
     #         print('TF stats gives', flops.total_float_ops)
 
-    for model in models[13:15]:
+    for model in models:
 
         model_path = os.path.join(MODELS_DIR, model)
         model_name = 'frozen_inference_graph.xml'
-
+        model_type = model_type_fun(model)
         print('Processing ' + model)
 
 
@@ -80,8 +81,9 @@ if __name__ == '__main__':
         os.system(cmd)
         consumed_time = np.loadtxt('latencies.txt')
 
-        df = df.append({'Model': model, 'Flops': 0, 'Framework': FRAMEWORK, 'Device': inference_device,
-                   'Average Time': st.mean(consumed_time), 'Std Time': st.stdev(consumed_time)}, ignore_index=True)
+        df = df.append({'Model': model, 'Model Type': model_type, 'Flops': 0,
+                        'Framework': FRAMEWORK, 'Device': inference_device,
+                        'Average Time': st.mean(consumed_time), 'Std Time': st.stdev(consumed_time)}, ignore_index=True)
 
 
 

@@ -15,6 +15,7 @@ def untar(fname, epath):
         "Not a tar.gz file: '%s '" % sys.argv[0]
 
 DOWNLOADS_DIR = 'detection_models\\'
+os.mkdir(DOWNLOADS_DIR)
 
 # For every line in the file
 for url in open('detection_models.txt'):

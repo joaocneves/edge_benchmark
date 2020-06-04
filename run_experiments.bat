@@ -1,5 +1,5 @@
 : OPENVINO R2020.2
-python evaluate_detection_models_openvino.py CPU
+: python evaluate_detection_models_openvino.py CPU
 
 : TF 1.14
 call conda activate tf14

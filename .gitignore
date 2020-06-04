@@ -1,2 +1,6 @@
-.idea/*
 detection_models/*
+.idea/
+
+__pycache__/
+
+latencies.txt
