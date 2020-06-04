@@ -1,6 +1,16 @@
+import os
 import pandas as pd
 
-model_framework_table = pd.read_csv('stats.csv')
+RESULTS_DIR = '.'
+
+
+aux = pd.DataFrame()
+
+for i in os.listdir(RESULTS_DIR):
+    if os.path.isfile(os.path.join(RESULTS_DIR,i)) and 'stats_' in i:
+        aux = pd.concat([aux, pd.read_csv(os.path.join(RESULTS_DIR,i))], axis=0)
+
+model_framework_table = aux
 models = model_framework_table['Model']
 frameworks = model_framework_table['Framework']
 

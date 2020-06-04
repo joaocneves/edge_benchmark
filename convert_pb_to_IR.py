@@ -42,7 +42,6 @@ for model in models:
         cmd = 'python "{0}mo_tf.py" --input_model {1}{2} ' \
               '--tensorflow_object_detection_api_pipeline_config {1}pipeline.config ' \
               '--transformations_config "{0}extensions/front/tf/mask_rcnn_support.json" ' \
-              '--output detection_boxes,detection_scores,num_detections ' \
               '--output_dir {1}' \
             .format(MODEL_OPTIMIZER_PATH, model_path, 'frozen_inference_graph.pb')
 
@@ -52,4 +51,4 @@ for model in models:
         cmd = 'Unrecognized model'
 
     print(cmd)
-    os.system(cmd)
+    #os.system(cmd)
