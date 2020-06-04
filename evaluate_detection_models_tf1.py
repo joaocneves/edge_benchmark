@@ -13,9 +13,8 @@ import tensorflow as tf
 import statistics as st
 from aux_fun import model_type
 from detection_model_lib import load_detection_model
-
-
-
+from aux_fun import model_type as model_type_fun
+from aux_fun import architecture_type as architecture_type_fun
 
 if __name__ == '__main__':
 
@@ -49,6 +48,7 @@ if __name__ == '__main__':
 
     df = pd.DataFrame({'Model': [],
                        'Model Type': [],
+                       'Architecture': [],
                        'Flops': [],
                        'Framework': [],
                        'Device': [],
@@ -74,6 +74,8 @@ if __name__ == '__main__':
 
         model_path = os.path.join(MODELS_DIR, model)
         model_name = 'model.ckpt.meta'
+        model_type = model_type_fun(model)
+        arch_type = architecture_type_fun(model)
 
         sess = tf.Session()
         graph = tf.get_default_graph()
@@ -107,9 +109,8 @@ if __name__ == '__main__':
 
             consumed_time.append(1000*(t_e - t_s))
 
-
-        df = df.append({'Model': model, 'Model_Type': model_type(model), 'Flops': flops.total_float_ops,
-                        'Framework': FRAMEWORK, 'Device': inference_device,
+        df = df.append({'Model': model, 'Model_Type': model_type, 'Architecture': arch_type,
+                        'Flops': flops.total_float_ops, 'Framework': FRAMEWORK, 'Device': inference_device,
                         'Average Time': st.mean(consumed_time), 'Std Time': st.stdev(consumed_time)}, ignore_index=True)
 
 

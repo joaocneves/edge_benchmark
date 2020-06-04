@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import statistics as st
 from aux_fun import model_type as model_type_fun
-
+from aux_fun import architecture_type as architecture_type_fun
 
 if __name__ == '__main__':
 
@@ -44,6 +44,7 @@ if __name__ == '__main__':
 
     df = pd.DataFrame({'Model': [],
                        'Model Type': [],
+                       'Architecture': [],
                        'Flops': [],
                        'Framework': [],
                        'Device': [],
@@ -70,6 +71,7 @@ if __name__ == '__main__':
         model_path = os.path.join(MODELS_DIR, model)
         model_name = 'frozen_inference_graph.xml'
         model_type = model_type_fun(model)
+        arch_type = architecture_type_fun(model)
         print('Processing ' + model)
 
 
@@ -81,8 +83,8 @@ if __name__ == '__main__':
         os.system(cmd)
         consumed_time = np.loadtxt('latencies.txt')
 
-        df = df.append({'Model': model, 'Model Type': model_type, 'Flops': 0,
-                        'Framework': FRAMEWORK, 'Device': inference_device,
+        df = df.append({'Model': model, 'Model Type': model_type, 'Architecture': arch_type,
+                       'Flops': 0, 'Framework': FRAMEWORK, 'Device': inference_device,
                         'Average Time': st.mean(consumed_time), 'Std Time': st.stdev(consumed_time)}, ignore_index=True)
 
 
