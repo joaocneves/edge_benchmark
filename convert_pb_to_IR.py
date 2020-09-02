@@ -51,4 +51,4 @@ for model in models:
         cmd = 'Unrecognized model'
 
     print(cmd)
-    #os.system(cmd)
+    os.system(cmd)

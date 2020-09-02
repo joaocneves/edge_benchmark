@@ -1,7 +1,7 @@
 import os
 import urllib.request
 import tarfile, sys
-
+import argparse
 
 def remove_file_ext(fname):
 
@@ -43,17 +43,24 @@ def download_models(models_list, output_path, create_folder=False):
             os.mkdir(os.path.join(output_path, remove_file_ext(name)))
             untar(filename, os.path.join(output_path, remove_file_ext(name)))
         else:
-            untar(filename, name)
+            untar(filename, output_path + '\\')
 
 
 if __name__ == '__main__':
 
-    # DOWNLOADS_DIR = 'detection_models\\'
-    # if not os.path.exists(DOWNLOADS_DIR):
-    #     os.mkdir(DOWNLOADS_DIR)
-    # download_models('detection_models.txt', DOWNLOADS_DIR, create_folder=False)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_type', type=str, default='', help='the task to which the model was built to')
+    args = parser.parse_args()
 
-    DOWNLOADS_DIR = 'general_models\\'
-    if not os.path.exists(DOWNLOADS_DIR):
-        os.mkdir(DOWNLOADS_DIR)
-    download_models('general_models.txt', DOWNLOADS_DIR, create_folder=True)
+    if args.model_type == 'Detection':
+        DOWNLOADS_DIR = 'detection_models\\'
+        if not os.path.exists(DOWNLOADS_DIR):
+            os.mkdir(DOWNLOADS_DIR)
+        download_models('info\\detection_models.txt', DOWNLOADS_DIR, create_folder=False)
+    elif args.model_type == 'Classification':
+        DOWNLOADS_DIR = 'general_models\\'
+        if not os.path.exists(DOWNLOADS_DIR):
+            os.mkdir(DOWNLOADS_DIR)
+        download_models('info\\general_models.txt', DOWNLOADS_DIR, create_folder=True)
+    else:
+        print('Wrong args')
